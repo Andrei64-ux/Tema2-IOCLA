@@ -1,0 +1,47 @@
+1. Pentru a itera prin caracterele din plaintext am folosit registrul
+ebx. Mi-am facut un label for_loop pe care il folosesc pentru a
+parcurge mai usor caracterele.Pentru a lua caracter cu caracter 
+am folosit registrul al si am facut xor intre el si cheia inversata . 
+In edx , ciphertext , am mutat , de asemenea ,caracter cu caracter 
+din al pentru a forma rezultatul final . Am incrementat valoarea 
+"contorului" si am reluat operatiile.
+
+2. La ages , am inceput prin a interschimba valorile dinedx si ecx , 
+pentru a avea lungimea in ecx si sa fac loop.In label-ul for_loop am 
+facut diferenta dintre anul curent si cel al nasterii . Similar , am
+comparat luna nasterii cu cea prezenta si daca este mai mica sau egala
+am sarit intr-un alt label , skip , in care compar zilele . Daca este 
+mai mic sau egal se ajunge in end_loop , unde se compara diferenta cu 0
+si daca este pozitiva rezultatul se scrie in all_ages . Apoi se reia 
+procesul pana cand lungimea devine 0.
+
+3. Pentru columnar_transposition , am retinut in eax un contor
+pentru a avea pozitia elementelor din ciphertext . De asemenea
+in ecx am un iterator cu ajutorul caruia iterez prin key[] . Retin 
+elementul din key[] de pe pozitia i intr-o variabila si compar continutul
+ei cu lungimea plaintext-ului . Ma folosesc de stiva pentru a adauga 
+registrul edx pe care il vreau nemodificat si folosesc din el
+doar dl pentru a lua cel mai nesimnificativ byte . Scot de pe stiva
+edx-ul , incrementez contorul pentru ciphertext , iar rezultatul 
+final il scriu in ebx . Adun la edx lungimea cheii , iar in acest mod
+accesez elementele unei matrici ca pe cele ale unui vector . Practic 
+am vazut aceasta matrice ca pe o "matrice" cu o singura linie , adica
+un vector . In final , dupa ce nu se mai verifica conditia din label-ul
+while , incrementam indexul pentru elementele din key[].KeyboardInterrupt
+
+4.Am inceput prin a adauga cateva variabile ajutatoare . Am folosit re-
+gistrul esi care era liber , pentru a adauga pe stiva . Primul adaugat
+a fost tag-ul adresei care este egal cu adresa shiftata la dreapta
+cu 3 . Apoi , pentru index am facut and cu 7 pentru a pastra ultimii
+3 biti . Am mai folosit si o variabila boolean ok si un contor i.
+Am studiat intai cazul CACHE HIT , am facut un label in care incep
+cautarea , start_search , in care intai compar contorul cu 100
+si verificam daca am gasit o linie cu tag-ul calculat anterior , 
+primul element pus pe stiva . In acest caz , ok devine 1 si scriem
+in registrul reg valoarea din cache de pe pozitia [i][index].
+Pentru cazul CACHE MISS , daca deja nu s-a cazit in cazul anterior
+o linie cu tag-ul calculat , aducem 8 octeti in matricea cache
+la pozitia [to_replace][i] , shiftand la stanga cu 3 si adaugand i.
+Urmatorul pas e sa aducem pe pozitia [to_replace] din tags , adresa
+tag-ului si sa scriem in registrul reg valoarea de la adresa 
+cache[to_replace][index].
